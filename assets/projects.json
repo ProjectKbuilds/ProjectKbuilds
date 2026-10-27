@@ -1,0 +1,9 @@
+{
+  "projects": [
+    {
+      "repo": "K-TraderLab",
+      "description": "Multi-DSP programmatic campaign simulator — budgets, bids, audiences and inventory play out week by week in a 3D timeline. Runs entirely in the browser.",
+      "language": "HTML"
+    }
+  ]
+}

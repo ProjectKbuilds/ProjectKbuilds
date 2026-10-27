@@ -1,0 +1,13 @@
+{
+  "title": "Skill Radar",
+  "axes": [
+    {"label": "DV360", "value": 88},
+    {"label": "The Trade Desk", "value": 85},
+    {"label": "Amazon DSP", "value": 82},
+    {"label": "Google Ads", "value": 80},
+    {"label": "CTV & Video", "value": 84},
+    {"label": "Optimization", "value": 86},
+    {"label": "Audience & Retargeting", "value": 82},
+    {"label": "Excel Reporting", "value": 78}
+  ]
+}
