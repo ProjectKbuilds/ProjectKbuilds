@@ -1,0 +1,34 @@
+name: snake
+
+# Snake animation eating the contribution graph. Runs every 12 hours.
+# Images go to the orphan branch "output" (keeps main history clean) and
+# are referenced in the README by full raw URL. The URLs 404 until this
+# workflow has completed once — that is expected, not a bug.
+
+"on":
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/snake-dark.svg?palette=github-dark
+            dist/snake.svg?palette=github-light
+
+      - uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+          jekyll: false
+          commit_message: "chore: update contribution snake"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

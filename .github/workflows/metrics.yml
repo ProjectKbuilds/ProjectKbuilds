@@ -1,0 +1,65 @@
+name: metrics
+
+# 3D contribution calendar, language mix, and achievement badges.
+# Runs every 6 hours. Outputs land in assets/ on main.
+# Needs repo secret METRICS_TOKEN (classic PAT, scopes repo + read:user):
+# the built-in GITHUB_TOKEN cannot read contribution data for this action.
+
+"on":
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 3D isometric contribution calendar.
+      - uses: lowlighter/metrics@latest
+        with:
+          filename: metrics.isocalendar.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: ProjectKbuilds
+          template: classic
+          base: header, activity, community, repositories, metadata
+          config_timezone: America/New_York
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: half-year
+
+      # Language mix across public repos.
+      - uses: lowlighter/metrics@latest
+        with:
+          filename: metrics.languages.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: ProjectKbuilds
+          template: classic
+          base: header, activity, community, repositories, metadata
+          config_timezone: America/New_York
+          plugin_languages: yes
+          plugin_languages_limit: 8
+
+      # Achievement badges.
+      - uses: lowlighter/metrics@latest
+        with:
+          filename: metrics.achievements.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: ProjectKbuilds
+          template: classic
+          base: header, activity, community, repositories, metadata
+          config_timezone: America/New_York
+          plugin_achievements: yes
+
+      # Fallback commit: the metrics action normally commits its own output.
+      # This only fires if files are left uncommitted.
+      - name: Commit metrics output if needed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/metrics.*.svg
+          git diff --cached --quiet || git commit -m "chore: refresh metrics graphics"
+          git push
