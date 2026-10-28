@@ -111,6 +111,9 @@ Hi, I'm Kiran Kumar Reddy — Programmatic Advertising Specialist, New York.
 
 <sub>Self-hosted graphics generated into this repo and refreshed daily — no third-party stats server that can go down. The language mix and achievements appear after the metrics workflow runs once.</sub>
 
+![Language mix](assets/metrics.languages.svg)
+![Achievements](assets/metrics.achievements.svg)
+
 ## `~/` selected work
 
 <div align="center">
