@@ -22,7 +22,7 @@ jobs:
       # 3D isometric contribution calendar.
       - uses: lowlighter/metrics@latest
         with:
-          filename: metrics.isocalendar.svg
+          filename: assets/metrics.isocalendar.svg
           token: ${{ secrets.METRICS_TOKEN }}
           user: ProjectKbuilds
           template: classic
@@ -34,7 +34,7 @@ jobs:
       # Language mix across public repos.
       - uses: lowlighter/metrics@latest
         with:
-          filename: metrics.languages.svg
+          filename: assets/metrics.languages.svg
           token: ${{ secrets.METRICS_TOKEN }}
           user: ProjectKbuilds
           template: classic
@@ -46,20 +46,10 @@ jobs:
       # Achievement badges.
       - uses: lowlighter/metrics@latest
         with:
-          filename: metrics.achievements.svg
+          filename: assets/metrics.achievements.svg
           token: ${{ secrets.METRICS_TOKEN }}
           user: ProjectKbuilds
           template: classic
           base: header, activity, community, repositories, metadata
           config_timezone: America/New_York
           plugin_achievements: yes
-
-      # Fallback commit: the metrics action normally commits its own output.
-      # This only fires if files are left uncommitted.
-      - name: Commit metrics output if needed
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/metrics.*.svg
-          git diff --cached --quiet || git commit -m "chore: refresh metrics graphics"
-          git push
